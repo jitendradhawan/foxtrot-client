@@ -2,10 +2,11 @@ package com.flipkart.foxtrot.client;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
-
+@Data
 public class Document {
     @NotNull
     @NotEmpty
@@ -18,6 +19,9 @@ public class Document {
     @NotNull
     @JsonProperty
     private Object data;
+
+    @JsonProperty
+    private Object sessionActivitySet;
 
     public Document() {
         this.timestamp = System.currentTimeMillis();
