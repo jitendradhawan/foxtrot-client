@@ -6,7 +6,7 @@
 
     <groupId>com.foxtrot</groupId>
     <artifactId>foxtrot-client</artifactId>
-    <version>0.2.9-SNAPSHOT</version>
+    <version>0.2.10-SNAPSHOT</version>
 
     <properties>
         <feign.version>8.15.1</feign.version>
@@ -62,6 +62,16 @@
         <repository>
             <id>github.release.repo</id>
             <url>https://raw.github.com/bulldog2011/bulldog-repo/master/repo/releases/</url>
+        </repository>
+        <repository>
+            <id>phonepe-releases</id>
+            <name>releases</name>
+            <url>http://artifactory.phonepe.com/content/repositories/releases</url>
+        </repository>
+        <repository>
+            <id>phonepe-snapshots</id>
+            <name>snapshots</name>
+            <url>http://artifactory.phonepe.com/content/repositories/snapshots</url>
         </repository>
     </repositories>
 

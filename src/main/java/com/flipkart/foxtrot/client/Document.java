@@ -2,11 +2,13 @@ package com.flipkart.foxtrot.client;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 @Data
+@AllArgsConstructor
 public class Document {
     @NotNull
     @NotEmpty
@@ -32,6 +34,7 @@ public class Document {
         this.timestamp = timestamp;
         this.data = data;
     }
+
 
     public String getId() {
         return id;
