@@ -18,8 +18,6 @@ package com.flipkart.foxtrot.client;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.flipkart.foxtrot.client.cluster.FoxtrotClusterMember;
-import com.flipkart.foxtrot.client.selectors.MemberSelector;
 import com.flipkart.foxtrot.client.serialization.JacksonJsonSerializationHandler;
 import org.junit.Test;
 
@@ -29,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.flipkart.foxtrot.client.selectors.EndpointType.SIMPLE;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 public class EventQueuedSendTest extends BaseTest {
@@ -45,16 +44,12 @@ public class EventQueuedSendTest extends BaseTest {
         FoxtrotClientConfig clientConfig = new FoxtrotClientConfig();
         clientConfig.setHost(testHostPort.getHostName());
         clientConfig.setPort(testHostPort.getPort());
+        clientConfig.setEndpointType(SIMPLE);
         clientConfig.setTable("test");
         clientConfig.setQueuePath(path);
         clientConfig.setBatchSize(50);
 
-        FoxtrotClient client = new FoxtrotClient(clientConfig, new MemberSelector() {
-            @Override
-            public FoxtrotClusterMember selectMember(List<FoxtrotClusterMember> members) {
-                return new FoxtrotClusterMember(testHostPort.getHostName(), testHostPort.getPort());
-            }
-        }, JacksonJsonSerializationHandler.INSTANCE);
+        FoxtrotClient client = new FoxtrotClient(clientConfig, JacksonJsonSerializationHandler.INSTANCE);
         JsonNodeFactory nodeFactory = new JsonNodeFactory(false);
         for (int i = 0; i < 200; i++) {
             try {
@@ -85,16 +80,12 @@ public class EventQueuedSendTest extends BaseTest {
         FoxtrotClientConfig clientConfig = new FoxtrotClientConfig();
         clientConfig.setHost(testHostPort.getHostName());
         clientConfig.setPort(testHostPort.getPort());
+        clientConfig.setEndpointType(SIMPLE);
         clientConfig.setTable("test");
         clientConfig.setQueuePath(path);
         clientConfig.setBatchSize(50);
 
-        FoxtrotClient client = new FoxtrotClient(clientConfig, new MemberSelector() {
-            @Override
-            public FoxtrotClusterMember selectMember(List<FoxtrotClusterMember> members) {
-                return new FoxtrotClusterMember(testHostPort.getHostName(), testHostPort.getPort());
-            }
-        }, JacksonJsonSerializationHandler.INSTANCE);
+        FoxtrotClient client = new FoxtrotClient(clientConfig, JacksonJsonSerializationHandler.INSTANCE);
         JsonNodeFactory nodeFactory = new JsonNodeFactory(false);
         List<Document> documents = new ArrayList<>();
         for (int i = 0; i < 200; i++) {

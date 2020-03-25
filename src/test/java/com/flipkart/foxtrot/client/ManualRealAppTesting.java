@@ -2,12 +2,10 @@ package com.flipkart.foxtrot.client;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.flipkart.foxtrot.client.cluster.FoxtrotCluster;
+import com.flipkart.foxtrot.client.cluster.FoxtrotNodeDiscoveryCluster;
 import com.flipkart.foxtrot.client.cluster.FoxtrotClusterMember;
 import com.flipkart.foxtrot.client.selectors.MemberSelector;
 import com.flipkart.foxtrot.client.senders.HttpAsyncEventSender;
-import com.flipkart.foxtrot.client.senders.HttpSyncEventSender;
-import com.flipkart.foxtrot.client.serialization.JacksonJsonFoxtrotClusterResponseSerializationHandlerImpl;
 import com.flipkart.foxtrot.client.serialization.JacksonJsonSerializationHandler;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -30,7 +28,7 @@ public class ManualRealAppTesting {
         clientConfig.setHost("192.168.99.100"); //CHANGE TO YOU LOCAL IP ON LINUX
         clientConfig.setPort(17000);
         clientConfig.setTable("testapp");
-        FoxtrotCluster foxtrotCluster = new FoxtrotCluster(clientConfig, new MemberSelector() {
+        FoxtrotNodeDiscoveryCluster foxtrotCluster = new FoxtrotNodeDiscoveryCluster(clientConfig, new MemberSelector() {
             @Override
             public FoxtrotClusterMember selectMember(List<FoxtrotClusterMember> members) {
                 return new FoxtrotClusterMember("192.168.99.100", 17000);  //CHANGE TO YOU LOCAL IP ON LINUX

@@ -1,5 +1,7 @@
 package com.flipkart.foxtrot.client;
 
+import com.flipkart.foxtrot.client.selectors.EndpointType;
+
 /**
  * Configuration for the foxtrot client.
  */
@@ -18,6 +20,13 @@ public class FoxtrotClientConfig {
      * The port on the host or load balancer from which cluster member information will be polled. (Default: 80)
      */
     private int port = 80;
+
+    /**
+     * Endpoint type :
+     * SIMPLE : for load balancer endpoint
+     * DISCOVERY: for discovering cluster members
+     */
+    private EndpointType endpointType = EndpointType.SIMPLE;
 
     /**
      * Maximum number of connections to establish for metadata polling. (Default: 10)
@@ -129,5 +138,13 @@ public class FoxtrotClientConfig {
 
     public void setKeepAliveTimeMillis(long keepAliveTimeMillis) {
         this.keepAliveTimeMillis = keepAliveTimeMillis;
+    }
+
+    public EndpointType getEndpointType() {
+        return endpointType;
+    }
+
+    public void setEndpointType(EndpointType endpointType) {
+        this.endpointType = endpointType;
     }
 }

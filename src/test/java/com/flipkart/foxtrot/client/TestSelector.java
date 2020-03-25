@@ -17,7 +17,7 @@
 package com.flipkart.foxtrot.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flipkart.foxtrot.client.cluster.FoxtrotCluster;
+import com.flipkart.foxtrot.client.cluster.FoxtrotNodeDiscoveryCluster;
 import com.flipkart.foxtrot.client.cluster.FoxtrotClusterMember;
 import com.flipkart.foxtrot.client.cluster.FoxtrotClusterStatus;
 import com.flipkart.foxtrot.client.selectors.RandomSelector;
@@ -51,7 +51,7 @@ public class TestSelector {
         FoxtrotClientConfig clientConfig = new FoxtrotClientConfig();
         clientConfig.setHost("localhost");
         clientConfig.setPort(8888);
-        FoxtrotCluster foxtrotCluster = new FoxtrotCluster(clientConfig, new RandomSelector());
+        FoxtrotNodeDiscoveryCluster foxtrotCluster = new FoxtrotNodeDiscoveryCluster(clientConfig, new RandomSelector());
         Assert.assertNotNull(foxtrotCluster.member());
     }
 
@@ -60,7 +60,7 @@ public class TestSelector {
         FoxtrotClientConfig clientConfig = new FoxtrotClientConfig();
         clientConfig.setHost("localhost");
         clientConfig.setPort(8888);
-        FoxtrotCluster foxtrotCluster = new FoxtrotCluster(clientConfig, new RoundRobinSelector());
+        FoxtrotNodeDiscoveryCluster foxtrotCluster = new FoxtrotNodeDiscoveryCluster(clientConfig, new RoundRobinSelector());
         final String host1 = foxtrotCluster.member().getHost();
         final String host2 = foxtrotCluster.member().getHost();
         Assert.assertNotNull(host1);

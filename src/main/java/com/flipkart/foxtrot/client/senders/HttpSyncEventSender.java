@@ -3,8 +3,8 @@ package com.flipkart.foxtrot.client.senders;
 import com.flipkart.foxtrot.client.Document;
 import com.flipkart.foxtrot.client.EventSender;
 import com.flipkart.foxtrot.client.FoxtrotClientConfig;
-import com.flipkart.foxtrot.client.cluster.FoxtrotCluster;
 import com.flipkart.foxtrot.client.cluster.FoxtrotClusterMember;
+import com.flipkart.foxtrot.client.cluster.IFoxtrotCluster;
 import com.flipkart.foxtrot.client.selectors.FoxtrotTarget;
 import com.flipkart.foxtrot.client.serialization.EventSerializationHandler;
 import com.flipkart.foxtrot.client.serialization.SerializationException;
@@ -25,13 +25,13 @@ public class HttpSyncEventSender extends EventSender {
     private static final Logger logger = LoggerFactory.getLogger(HttpSyncEventSender.class.getSimpleName());
 
     private final String table;
-    private final FoxtrotCluster client;
+    private final IFoxtrotCluster client;
     private FoxtrotHttpClient httpClient;
 
     private final static Slf4jLogger slf4jLogger = new Slf4jLogger();
 
 
-    public HttpSyncEventSender(final FoxtrotClientConfig config, FoxtrotCluster client, EventSerializationHandler serializationHandler) {
+    public HttpSyncEventSender(final FoxtrotClientConfig config, IFoxtrotCluster client, EventSerializationHandler serializationHandler) {
         super(serializationHandler);
         this.table = config.getTable();
         this.client = client;

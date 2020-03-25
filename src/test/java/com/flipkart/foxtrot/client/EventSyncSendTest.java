@@ -18,8 +18,10 @@ package com.flipkart.foxtrot.client;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.flipkart.foxtrot.client.cluster.FoxtrotCluster;
+import com.flipkart.foxtrot.client.cluster.FoxtrotNodeDiscoveryCluster;
 import com.flipkart.foxtrot.client.cluster.FoxtrotClusterMember;
+import com.flipkart.foxtrot.client.cluster.IFoxtrotCluster;
+import com.flipkart.foxtrot.client.selectors.EndpointType;
 import com.flipkart.foxtrot.client.selectors.MemberSelector;
 import com.flipkart.foxtrot.client.senders.HttpSyncEventSender;
 import com.flipkart.foxtrot.client.serialization.JacksonJsonSerializationHandler;
@@ -28,6 +30,8 @@ import org.junit.Test;
 import java.util.List;
 import java.util.UUID;
 
+import static com.flipkart.foxtrot.client.selectors.EndpointType.DISCOVERY;
+import static com.flipkart.foxtrot.client.selectors.EndpointType.SIMPLE;
 import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
@@ -42,7 +46,8 @@ public class EventSyncSendTest extends BaseTest {
         clientConfig.setHost(testHostPort.getHostName());
         clientConfig.setPort(testHostPort.getPort());
         clientConfig.setTable("test");
-        FoxtrotCluster foxtrotCluster = new FoxtrotCluster(clientConfig, new MemberSelector() {
+        clientConfig.setEndpointType(DISCOVERY);
+        IFoxtrotCluster foxtrotCluster = new FoxtrotNodeDiscoveryCluster(clientConfig, new MemberSelector() {
             @Override
             public FoxtrotClusterMember selectMember(List<FoxtrotClusterMember> members) {
                 return new FoxtrotClusterMember(testHostPort.getHostName(), testHostPort.getPort());

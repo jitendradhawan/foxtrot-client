@@ -11,8 +11,9 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class FoxtrotCluster {
-    private static final Logger logger = LoggerFactory.getLogger(FoxtrotCluster.class.getSimpleName());
+public class FoxtrotNodeDiscoveryCluster implements IFoxtrotCluster {
+
+    private static final Logger logger = LoggerFactory.getLogger(FoxtrotNodeDiscoveryCluster.class.getSimpleName());
 
     private final MemberSelector selector;
     private FoxtrotClientConfig clientConfig;
@@ -20,8 +21,8 @@ public class FoxtrotCluster {
     private ScheduledExecutorService executorService;
     private AtomicReference<FoxtrotClusterStatus> status = new AtomicReference<>();
 
-    public FoxtrotCluster(FoxtrotClientConfig config,
-                          MemberSelector selector) throws Exception {
+    public FoxtrotNodeDiscoveryCluster(FoxtrotClientConfig config,
+                                       MemberSelector selector) throws Exception {
         this.selector = selector;
         this.clientConfig = config;
         executorService = Executors.newScheduledThreadPool(1);

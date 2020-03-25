@@ -1,8 +1,8 @@
 package com.flipkart.foxtrot.client;
 
-import com.flipkart.foxtrot.client.cluster.FoxtrotCluster;
-import com.flipkart.foxtrot.client.selectors.MemberSelector;
-import com.flipkart.foxtrot.client.selectors.RandomSelector;
+import com.flipkart.foxtrot.client.cluster.FoxtrotClusterFactory;
+import com.flipkart.foxtrot.client.cluster.FoxtrotNodeDiscoveryCluster;
+import com.flipkart.foxtrot.client.cluster.IFoxtrotCluster;
 import com.flipkart.foxtrot.client.senders.HttpAsyncEventSender;
 import com.flipkart.foxtrot.client.senders.HttpSyncEventSender;
 import com.flipkart.foxtrot.client.senders.QueuedSender;
@@ -16,17 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FoxtrotClient {
-    private final FoxtrotCluster foxtrotCluster;
+    private final IFoxtrotCluster foxtrotCluster;
     private final EventSender eventSender;
 
     public FoxtrotClient(FoxtrotClientConfig config) throws Exception {
-        this(config, new RandomSelector(), JacksonJsonSerializationHandler.INSTANCE);
+        this(config, JacksonJsonSerializationHandler.INSTANCE);
     }
 
-    public FoxtrotClient(FoxtrotClientConfig config,
-                         MemberSelector memberSelector,
-                         EventSerializationHandler serializationHandler) throws Exception {
-        this.foxtrotCluster = new FoxtrotCluster(config, memberSelector);
+    public FoxtrotClient(FoxtrotClientConfig config, EventSerializationHandler serializationHandler) throws Exception {
+        this.foxtrotCluster = new FoxtrotClusterFactory(config).getCluster(config.getEndpointType());
         Preconditions.checkNotNull(config.getTable());
         Preconditions.checkNotNull(config.getClientType());
         Preconditions.checkNotNull(config.getHost());
@@ -66,7 +64,7 @@ public class FoxtrotClient {
         }
     }
 
-    public FoxtrotClient(FoxtrotCluster foxtrotCluster, EventSender eventSender) {
+    public FoxtrotClient(IFoxtrotCluster foxtrotCluster, EventSender eventSender) {
         this.foxtrotCluster = foxtrotCluster;
         this.eventSender = eventSender;
     }

@@ -1,7 +1,7 @@
 package com.flipkart.foxtrot.client.selectors;
 
-import com.flipkart.foxtrot.client.cluster.FoxtrotCluster;
 import com.flipkart.foxtrot.client.cluster.FoxtrotClusterMember;
+import com.flipkart.foxtrot.client.cluster.IFoxtrotCluster;
 import feign.Request;
 import feign.RequestTemplate;
 import feign.Target;
@@ -10,9 +10,9 @@ public class FoxtrotTarget<T> implements Target<T> {
 
     private final Class<T> type;
     private final String name;
-    private final FoxtrotCluster foxtrotCluster;
+    private final IFoxtrotCluster foxtrotCluster;
 
-    public FoxtrotTarget(Class<T> type, final String name, FoxtrotCluster foxtrotCluster) {
+    public FoxtrotTarget(Class<T> type, final String name, IFoxtrotCluster foxtrotCluster) {
         this.type = type;
         this.name = name;
         this.foxtrotCluster = foxtrotCluster;
